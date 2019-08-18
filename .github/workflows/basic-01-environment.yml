@@ -1,0 +1,43 @@
+name: "Basic 01: Environment"
+
+on:
+  push:
+    branches:
+      - master
+      - basic-*
+  pull_request:
+
+jobs:
+  read-context-and-vars:
+
+    # See also:
+    # - https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy
+    # - https://help.github.com/en/articles/virtual-environments-for-github-actions#supported-virtual-environments
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }} # runs on each `os`
+
+    steps:
+    - uses: actions/checkout@v1
+    - run: ls -al ${{ github.workspace }}
+
+    - name: You can use "quote" 'and' `symbols` 😀
+      run: echo 🍻
+
+    - name: You can get GitHub Context
+      run: echo ${GITHUB_CONTEXT} > /tmp/context.json
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+
+    # See also:
+    # - https://help.github.com/en/articles/virtual-environments-for-github-actions#environment-variables
+    - name: You can use "default environment variables"
+      run: echo ${GITHUB_REF}
+    # See also:
+    # - https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+    - name: And you can use Bash Parameter Expansion
+      run: echo ${GITHUB_REF#refs/*/}
+    - run: echo ${GITHUB_REF%%/*}
+    - run: echo ${GITHUB_REF+HasTheReference}
+    - run: echo ${NULL_VAR:-Default}

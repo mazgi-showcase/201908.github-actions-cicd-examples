@@ -1,0 +1,36 @@
+name: "Xcode 01: Build macOS App"
+
+on:
+  push:
+    branches:
+      - master
+      - xcode-*
+    tags:
+      - xcode-*
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set version from the git tag
+      run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${GITHUB_REF#refs/tags/xcode-}" 'Xcode Projects/The Empty/The Empty/Info.plist'
+      if: contains(github.ref, 'refs/tags/xcode-')
+    - name: Build the App
+      run: cd 'Xcode Projects/The Empty/' && xcodebuild -target 'The Empty' -scheme 'The Empty' -configuration Release -archivePath build/the-empty clean archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    - name: Export the App
+      run: cd 'Xcode Projects/The Empty/' && xcodebuild -exportArchive -exportOptionsPlist export-options.plist -archivePath build/the-empty.xcarchive -exportPath archive/
+    - name: Create tmp DMG image
+      run: hdiutil create /tmp/tmp.dmg -ov -volname "The Empty" -fs HFS+ -srcfolder 'Xcode Projects/The Empty/archive'
+    - name: Create fixed DMG image
+      run: hdiutil convert /tmp/tmp.dmg -format UDZO -o "The Empty.dmg"
+    - name: Install the hub command
+      run: curl -L -o /tmp/hub.tgz https://github.com/github/hub/releases/download/v2.12.3/hub-darwin-amd64-2.12.3.tgz
+    - name: Extract the hub command
+      run: tar xf /tmp/hub.tgz
+    - name: Create a new release via hub command
+      run: hub-*/bin/hub release create -a "The Empty.dmg" -m "Release ${GITHUB_REF#refs/*/} (macOS)" ${GITHUB_REF#refs/*/}
+      env:
+        GITHUB_USER: mazgi
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: contains(github.ref, 'refs/tags/xcode-')

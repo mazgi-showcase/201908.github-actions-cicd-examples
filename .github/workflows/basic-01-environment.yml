@@ -19,7 +19,9 @@ jobs:
     runs-on: ${{ matrix.os }} # runs on each `os`
 
     steps:
-    - uses: actions/checkout@v1
+    # You can use the specific commit for action
+    # ref. https://github.com/actions/checkout/commit/7f0669ca1fd955c0e0fd85ee8d5b8d16978be97e
+    - uses: actions/checkout@7f0669ca1fd955c0e0fd85ee8d5b8d16978be97e
     - run: ls -al ${{ github.workspace }}
 
     - name: You can use "quote" 'and' `symbols` 😀

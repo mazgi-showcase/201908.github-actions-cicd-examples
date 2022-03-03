@@ -1,5 +1,4 @@
 # 201908.github-actions-cicd-examples
-
-![status of Basic 01: Environment](https://github.com/mazgi/201908.github-actions-cicd-examples/workflows/Basic%2001%3A%20Environment/badge.svg)
-![status of Docker 01: Build](https://github.com/mazgi/201908.github-actions-cicd-examples/workflows/Docker%2001%3A%20Build/badge.svg)
-![status of Xcode 01: Build macOS App](https://github.com/mazgi/201908.github-actions-cicd-examples/workflows/Xcode%2001%3A%20Build%20macOS%20App/badge.svg)
+[![status of Basic 01: Environment](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/workflows/Basic%2001%3A%20Environment/badge.svg)](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/actions?query=workflow%3A%22Basic+01%3A+Environment%22)
+[![status of Docker 01: Build](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/workflows/Docker%2001%3A%20Build/badge.svg)](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/actions?query=workflow%3A%22Docker+01%3A+Build%22)
+[![status of Xcode 01: Build macOS App](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/workflows/Xcode%2001%3A%20Build%20macOS%20App/badge.svg)](https://github.com/mazgi-showcase/201908.github-actions-cicd-examples/actions?query=workflow%3A%22Xcode+01%3A+Build+macOS+App%22)
